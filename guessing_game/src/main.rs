@@ -9,21 +9,29 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1, 101);
 
-    println!("秘密の数字は: {}", secret_number);
+    loop {
+        println!("予想する数を入れてね");
 
-    println!("予想する数を入れてね");
+        let mut guess = String::new();
 
-    let mut guess = String::new();
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed o read line");
 
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed o read line");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
-    println!("予想は: {}", guess);
+        println!("予想は: {}", guess);
 
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("小さすぎ！"),
-        Ordering::Greater => println!("大きすぎ！"),
-        Ordering::Equal => println!("正解！"),
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("小さすぎ！"),
+            Ordering::Greater => println!("大きすぎ！"),
+            Ordering::Equal => {
+                println!("正解！");
+                break;
+            }
+        }
     }
 }
