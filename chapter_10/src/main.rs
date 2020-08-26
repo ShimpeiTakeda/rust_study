@@ -1,27 +1,23 @@
-fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
-    let mut largest = list[0];
+use std::fmt::Display;
 
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
+fn longest_with_annoucement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
     }
-
-    largest
 }
 
 fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
+    let char_list1 = "abcdg";
+    let char_list2 = "qq";
+    let ann = "ann";
 
-    let result = largest(&number_list);
-
-    println!("The largest number is {}", result);
-    assert_eq!(result, 100);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest(&char_list);
+    let result = longest_with_annoucement(&char_list1, &char_list2, ann);
 
     println!("The largest char is {}", result);
-    assert_eq!(result, 'y');
 }
